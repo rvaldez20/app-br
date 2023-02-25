@@ -1,0 +1,12 @@
+{
+  "name": "bienes-raices",
+  "version": "1.0.0",
+  "description": "Proyecto con node, exppress, pug",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["MVC", "Pug", "Tailwind", "MySQL", "Sequelize", "Express"],
+  "author": "Raul Valdez (CentinelaCode)",
+  "license": "ISC"
+}
