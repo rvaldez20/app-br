@@ -7,9 +7,14 @@ const PORT = 3000;
 // Crear la app
 const app = express();
 
+// habilitar Template Engine (pug)
+app.set('view engine', 'pug');
+app.set('views', './src/views');
+
 
 // Routes
-app.use('/', usuarioRoutes)
+app.use('/auth', usuarioRoutes)
+
 
 
 // listen
