@@ -14,5 +14,10 @@ block contenido
                   input(id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Email" type="email" name="email")
                div
                   label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="password") Password
-                  input(id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Password" type="password" name="password")               
+                  input(id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Password" type="password" name="password")  
+
+               div(class="flex items-center justify-between")
+                  a(class="text-gray-500 text-xs" href="/auth/registro") ¿No tienes cuenta? Crea una 
+                  a(class="text-gray-500 text-xs" href="/auth/olvide-password") Olvide mi password
+
                input(class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-md font-bold" type="submit" value="Iniciar Sesión")
