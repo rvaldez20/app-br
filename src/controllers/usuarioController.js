@@ -11,6 +11,10 @@ const formularioRegistro = (req, res) => {
   })
 }
 
+const registrar = (req, res) => {
+  console.log('Registrando un nuevo user.....')
+}
+
 const formularioOlvidePassword = (req, res) => {
   res.render('auth/olvide-password', {
     page: "Recupera tu acceso a Bienes Raices"
@@ -20,5 +24,6 @@ const formularioOlvidePassword = (req, res) => {
 export {
   formularioLogin,
   formularioRegistro,
+  registrar,
   formularioOlvidePassword,
 }
