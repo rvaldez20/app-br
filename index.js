@@ -8,6 +8,9 @@ const PORT = 3000;
 // Crear la app
 const app = express();
 
+// habilitamos parser (envio datos formulario)
+app.use(express.urlencoded({extended: true}));
+
 
 // Conexión a la DB
 try {
