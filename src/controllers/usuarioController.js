@@ -17,7 +17,7 @@ const formularioRegistro = (req, res) => {
 
 const registrar = async(req, res) => {
   // destructuraos la data del formulario
-  const { password, repetir_password } = req.body;
+  const { nombre, email, password, repetir_password } = req.body;
 
   // Validacion
   await check('nombre').notEmpty().withMessage('Nombre es obligatorio').run(req);
@@ -34,6 +34,10 @@ const registrar = async(req, res) => {
     return res.render('auth/registro', {
       page: "Crear Cuenta",
       errores: arrayErrores.array(),
+      usuario: {
+        nombre,
+        email
+      }
     })
   }
 

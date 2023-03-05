@@ -16,10 +16,10 @@ block contenido
             form(class="space-y-4" method="POST" action="/auth/registro" novalidate)
                div
                   label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="nombre") Nombre
-                  input(id="nombre" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Nombre" type="text" name="nombre")
+                  input(id="nombre" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Nombre" type="text" name="nombre" value= usuario ? usuario.nombre : '')
                div
                   label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="email") Email de registro
-                  input(id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Email" type="email" name="email")
+                  input(id="email" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Email" type="email" name="email" value= usuario ? usuario.email : '')
                div
                   label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="password") Password
                   input(id="password" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Ingresa tu Password" type="password" name="password")
