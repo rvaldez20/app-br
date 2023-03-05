@@ -10,6 +10,7 @@ const Usuario = db.define('usuarios', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
+    // unique: true
   },
   password: {
     type: DataTypes.STRING,
@@ -23,5 +24,6 @@ const Usuario = db.define('usuarios', {
     type: DataTypes.BOOLEAN
   },
 })
+
 
 export default Usuario;

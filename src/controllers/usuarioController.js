@@ -41,6 +41,22 @@ const registrar = async(req, res) => {
     })
   }
 
+  // verificar que el email no exista
+  const existeUsuario = await Usuario.findOne( { where: { email }} );
+    if(existeUsuario) {
+    // el email ya existe
+    return res.render('auth/registro', {
+      page: "Crear Cuenta",
+      errores: [{msg: 'El email ya esta registrado'}],
+      usuario: {
+        nombre,
+        email
+      }
+    })
+  }
+
+  return;
+
   
   const usuario = await Usuario.create(req.body);
   res.json(usuario);
