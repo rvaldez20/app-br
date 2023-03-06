@@ -2,20 +2,28 @@ import { check, validationResult } from 'express-validator';
 
 import Usuario from '../models/Usuario.js';
 import { generarId } from '../helpers/tokens.js';
+import { emailRegistro } from '../helpers/email.js';
 
 
+//! Formulario Login
 const formularioLogin = (req, res) => {
   res.render('auth/login', {
     page: "Iniciar Seción"
   })
 }
 
+
+
+//! Formulario Regsitro GET
 const formularioRegistro = (req, res) => {
   res.render('auth/registro', {
     page: "Crear Cuenta"
   })
 }
 
+
+
+//! Formulario Registro POST (guarda el usuario)
 const registrar = async(req, res) => {
   // destructuraos la data del formulario
   const { nombre, email, password, repetir_password } = req.body;
@@ -57,11 +65,18 @@ const registrar = async(req, res) => {
   }
 
   // Si pasa todas las validacioens guardamos el nuevo usuario  
-  await Usuario.create({
+  const usuario = await Usuario.create({
     nombre,
     email,
     password,
     token: generarId()
+  });
+
+  // envia el email de confirmación de cuenta
+  emailRegistro({
+    nombre: usuario.nombre,
+    email: usuario.email,
+    token: usuario.token,
   });
 
   // mostrar mensaje de confirmación (vista indicando que se envio un email)
@@ -71,11 +86,15 @@ const registrar = async(req, res) => {
   })
 }
 
+
+
+//! Formulario Olvide Password
 const formularioOlvidePassword = (req, res) => {
   res.render('auth/olvide-password', {
     page: "Recupera tu acceso a Bienes Raices"
   })
 }
+
 
 export {
   formularioLogin,
