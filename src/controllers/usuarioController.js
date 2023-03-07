@@ -2,7 +2,7 @@ import { check, validationResult } from 'express-validator';
 
 import Usuario from '../models/Usuario.js';
 import { generarId } from '../helpers/tokens.js';
-import { emailRegistro } from '../helpers/email.js';
+import { emailRegistro, emailOlvidePassword } from '../helpers/email.js';
 
 
 //! Formulario Login
@@ -161,10 +161,38 @@ const resetPassword = async(req, res) => {
     })
   }
   
-  //* Si email valido generamos token y enviar el email
+  //* Si email valido generamos el token y lo guardamos en la DB
+  usuario.token = generarId();
+  await usuario.save();
+
+  //* Ahora enviamos un email con el enlace para resetear el password
+  emailOlvidePassword({
+    email: usuario.email,
+    nombre: usuario.nombre,
+    token: usuario.token,
+  });
+
+  // mostrar mensaje de confirmación (vista indicando que se envio un email)
+  res.render('template/mensaje', {
+    page: 'Restablece tu Password',
+    mensaje: 'Hemos Enviado un email con las instrucciones para restablecer tu password.'
+  })
+
+
+}
+
+
+
+//! Comprobar Token para poder resetear password
+const comprobarToken = (req, res, next) => {
+  next();
+}
+
+
+
+//! Reseteamos el password
+const nuevoPassword = (req, res) => {
   
-
-
 }
 
 
@@ -175,4 +203,6 @@ export {
   confirmar,
   formularioOlvidePassword,
   resetPassword,
+  comprobarToken,
+  nuevoPassword,
 }
