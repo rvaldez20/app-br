@@ -150,7 +150,18 @@ const resetPassword = async(req, res) => {
   }
 
   //* si es un email valido buscar el email en la DB
+  const usuario = await Usuario.findOne({ where: {email}});
+  // console.log(usuario)
+  if(!usuario) {
+    // el email NO existe
+    return res.render('auth/olvide-password', {
+      page: "Crear Cuenta",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: 'El email no esta registrado'}],
+    })
+  }
   
+  //* Si email valido generamos token y enviar el email
   
 
 
