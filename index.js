@@ -3,7 +3,7 @@ import express from 'express';
 import usuarioRoutes from './src/routes/usuarioRoutes.js';
 import db from './src/config/db.js';
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Crear la app
 const app = express();
