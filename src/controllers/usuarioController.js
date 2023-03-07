@@ -16,8 +16,11 @@ const formularioLogin = (req, res) => {
 
 //! Formulario Regsitro GET
 const formularioRegistro = (req, res) => {
+  // console.log(req.csrfToken());  // muestra el token para CSRF
+
   res.render('auth/registro', {
-    page: "Crear Cuenta"
+    page: "Crear Cuenta",
+    csrfToken: req.csrfToken()
   })
 }
 
@@ -42,6 +45,7 @@ const registrar = async(req, res) => {
     // hay errores de validacion
     return res.render('auth/registro', {
       page: "Crear Cuenta",
+      csrfToken: req.csrfToken(),
       errores: arrayErrores.array(),
       usuario: {
         nombre,
@@ -56,6 +60,7 @@ const registrar = async(req, res) => {
     // el email ya existe
     return res.render('auth/registro', {
       page: "Crear Cuenta",
+      csrfToken: req.csrfToken(),
       errores: [{msg: 'El email ya esta registrado'}],
       usuario: {
         nombre,
