@@ -1,4 +1,5 @@
 import { check, validationResult } from 'express-validator';
+import bcrypt from 'bcrypt';
 
 import Usuario from '../models/Usuario.js';
 import { generarId } from '../helpers/tokens.js';
@@ -184,15 +185,67 @@ const resetPassword = async(req, res) => {
 
 
 //! Comprobar Token para poder resetear password
-const comprobarToken = (req, res, next) => {
-  next();
+const comprobarToken = async(req, res, next) => {
+  const {token} = req.params;
+
+  // berificar si el token es valido
+  const usuario = await Usuario.findOne({ where: {token}})
+
+  if(!usuario) {
+    return res.render('auth/confirmar-cuenta', {
+      page: 'Restablece tu Password',
+      mensaje: 'Hubo un error al validar tu información, intenta nuevamente.',
+      error: true
+    })
+  }
+
+  res.render('auth/reset-password', {
+    page: 'Restablece tu Password',
+    csrfToken: req.csrfToken(),
+  })
 }
 
 
 
 //! Reseteamos el password
-const nuevoPassword = (req, res) => {
-  
+const nuevoPassword = async(req, res) => { // destructuraos la data del formulario
+  const { password } = req.body;
+
+  // Validacion  
+  await check('password').isLength({ min: 6 }).withMessage('Password debe ser de al menos 6 caractere').run(req);
+
+  let arrayErrores = validationResult(req);  // arrayErrores() retorna un array con los errors
+    
+  // SI resultado esta no esta vacio mostramos los errores
+  if(!arrayErrores.isEmpty()) {
+    // hay errores de validacion
+    return res.render('auth/reset-password', {
+      page: "Restablecer Password",
+      csrfToken: req.csrfToken(),
+      errores: arrayErrores.array()
+    })
+  }
+
+  // identificar el usuario que hace el cambio (usamos el token para buscar el usurio)
+  const {token} = req.params;
+  const usuario = await Usuario.findOne({ where: {token}})
+
+  // se hashea el password
+  const salt = await bcrypt.genSalt(10);
+  usuario.password = await bcrypt.hash(password, salt);
+
+  // se elimina el token
+  usuario.token = null;
+
+  // guardamos el usuario
+  await usuario.save();
+
+  res.render('auth/confirmar-cuenta', {
+    page: 'Password Restablecido',
+    mensaje: 'El Password se guardo correctamente',      
+    error: false
+  })
+
 }
 
 
