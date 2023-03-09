@@ -35,6 +35,14 @@
         console.log(resultado)
 
         market.bindPopup(resultado.address.LongLabel)
+
+        // llenar los campos (input hidden de calle, lat y lng)
+        document.querySelector('.calle').textContent = resultado.address?.Address ?? '';
+        document.querySelector('#calle').value = resultado.address?.Address ?? '';
+        document.querySelector('#lat').value = resultado.latlng?.lat ?? '';
+        document.querySelector('#lng').value = resultado.latlng?.lng ?? '';
+ 
+
       })
 
     })
