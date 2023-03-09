@@ -1,1 +1,1 @@
-alert('Soy un map ')
+alert('Soy un mapa.')
