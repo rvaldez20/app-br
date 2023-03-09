@@ -4,8 +4,10 @@
     const lat = 24.0239822;
     const lng = -104.6721137;
     const mapa = L.map('mapa').setView([lat, lng ], 16);
-    
     let market;
+
+    // Utilizar Provider y Geocoder
+    const geocodeService = L.esri.Geocoding.geocodeService();
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -27,6 +29,14 @@
 
       // despues de soltar el pin se centra el mapa
       mapa.panTo(new L.LatLng(posicion.lat, posicion.lng));
+
+      //obtner información de la calle al mover el PIN
+      geocodeService.reverse().latlng(posicion, 13).run(function(error, resultado){
+        console.log(resultado)
+
+        market.bindPopup(resultado.address.LongLabel)
+      })
+
     })
 
 })()
