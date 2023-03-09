@@ -33,5 +33,10 @@ const Usuario = db.define('usuarios', {
   }
 })
 
+// Metodo personalizado de sequelize
+Usuario.prototype.verificarPassword = function(passwordPlano) {
+  return bcrypt.compareSync(passwordPlano, this.password);
+}
+
 
 export default Usuario;
