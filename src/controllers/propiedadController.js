@@ -3,7 +3,8 @@
 //! Panel Admin
 const admin = (req, res) => {
   res.render('propiedades/admin', {
-    page: 'Mis Propiedades'
+    page: 'Mis Propiedades',
+    barra: true
   })
 }
 
