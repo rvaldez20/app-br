@@ -12,10 +12,21 @@
     }).addTo(mapa);
 
     // pin
-    marker = new L.marker([lat, lng], {
+    market = new L.marker([lat, lng], {
       draggable: true,
       autoPan: true,
     })
     .addTo(mapa)
+
+    // detectar lat y lng de la posicion del pin
+    market.on('moveend', function(e){
+      market = e.target
+
+      const posicion = market.getLatLng();
+      // console.log(posicion)
+
+      // despues de soltar el pin se centra el mapa
+      mapa.panTo(new L.LatLng(posicion.lat, posicion.lng));
+    })
 
 })()
