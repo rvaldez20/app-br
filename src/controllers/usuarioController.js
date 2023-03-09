@@ -55,8 +55,16 @@ const autenticar = async(req, res) => {
     })
   }
 
-  // verificar que el password sea correcto
-  
+  // verificar que el password sea correcto return false(pass incorrceto) | true(pass correcto)
+  if(!usuario.verificarPassword(password)){
+    return res.render('auth/login', {
+      page: "Login",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: 'Los datos de acceso son incorrectos'}]
+    })
+  }
+
+  // autenticar al usuario
 
 
 }
