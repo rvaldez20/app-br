@@ -9,9 +9,58 @@ import { emailRegistro, emailOlvidePassword } from '../helpers/email.js';
 //! Formulario Login
 const formularioLogin = (req, res) => {
   res.render('auth/login', {
-    page: "Iniciar Seción"
+    page: 'Iniciar Seción',
+    csrfToken: req.csrfToken(),
   })
 }
+
+
+const autenticar = async(req, res) => {
+  const {email, password} = req.body;
+
+  // Validacion  
+  await check('email').isEmail().withMessage('El Email es requerido').run(req);
+  await check('password').notEmpty().withMessage('El Password es requerido').run(req);
+
+  let arrayErrores = validationResult(req);  // arrayErrores() retorna un array con los errors
+    
+  // SI resultado esta no esta vacio mostramos los errores
+  if(!arrayErrores.isEmpty()) {
+    // hay errores de validacion
+    return res.render('auth/login', {
+      page: "Login",
+      csrfToken: req.csrfToken(),
+      errores: arrayErrores.array()
+    })
+  }
+
+  // Comprobar que el usuario exista 
+  const usuario = await Usuario.findOne( { where: { email }} );
+  if(!usuario) {
+    // el email NO existe
+    return res.render('auth/login', {
+      page: "Login",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: 'El usuario no esta registrado'}]
+    })
+  }
+
+  // comprobar si el usuario esta confirmado
+  if(!usuario.confirmado) {
+    // la cuenta no esta activada
+    return res.render('auth/login', {
+      page: "Login",
+      csrfToken: req.csrfToken(),
+      errores: [{msg: 'Tu cuenta no ha sido confirmada'}]
+    })
+  }
+
+  // verificar que el password sea correcto
+  
+
+
+}
+
 
 
 
@@ -131,6 +180,9 @@ const formularioOlvidePassword = (req, res) => {
   })
 }
 
+
+
+//! Resetea el Password
 const resetPassword = async(req, res) => {
   // destructuraos la data del formulario
   const { email } = req.body;
@@ -178,8 +230,6 @@ const resetPassword = async(req, res) => {
     page: 'Restablece tu Password',
     mensaje: 'Hemos Enviado un email con las instrucciones para restablecer tu password.'
   })
-
-
 }
 
 
@@ -249,8 +299,10 @@ const nuevoPassword = async(req, res) => { // destructuraos la data del formular
 }
 
 
+
 export {
   formularioLogin,
+  autenticar,
   formularioRegistro,
   registrar,
   confirmar,
