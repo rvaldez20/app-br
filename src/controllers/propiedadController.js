@@ -8,6 +8,15 @@ const admin = (req, res) => {
   })
 }
 
+
+const crear = (req, res) => {
+  res.render('propiedades/crear', {
+    page: 'Crear Propiedad',
+    barra: true
+  })
+}
+
 export {
   admin,
+  crear,
 }
