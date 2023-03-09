@@ -3,6 +3,7 @@ import csrf from 'csurf';
 import cookieParser from 'cookie-parser'
 
 import usuarioRoutes from './src/routes/usuarioRoutes.js';
+import propiedadesRoutes from './src/routes/propiedadesRoutes.js';
 import db from './src/config/db.js';
 
 const PORT = process.env.PORT || 3000;
@@ -40,7 +41,8 @@ app.use(express.static('public'));
 
 
 // Routes
-app.use('/auth', usuarioRoutes)
+app.use('/auth', usuarioRoutes);
+app.use('/', propiedadesRoutes)
 
 
 
