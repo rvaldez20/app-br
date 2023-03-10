@@ -27,6 +27,7 @@ const crear = async (req, res) => {
     csrfToken: req.csrfToken(),
     categorias,
     precios,
+    datos: {}
   })
 }
 
@@ -53,6 +54,7 @@ const guardarPropiedad = async(req, res) => {
       csrfToken: req.csrfToken(),
       categorias,
       precios,
+      datos: req.body
     })
   }
 
