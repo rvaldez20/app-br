@@ -6,7 +6,8 @@ import protegerRuta from '../middleware/protegerRuta.js';
 import { 
   admin,
   crear,
-  guardarPropiedad
+  guardarPropiedad,
+  agregarImagen,
 } from '../controllers/propiedadController.js';
 
 const router = express.Router();
@@ -26,6 +27,8 @@ router.post('/propiedades/crear', protegerRuta,
   body('wc').isNumeric().withMessage('Es necesario seleccionar la cantidad de baños'),
   body('lat').notEmpty().withMessage('Es necesario ubicar la propiedad en el mapa'),
   guardarPropiedad);  
+
+  router.get('/propiedades/agregar-imagen/:id', agregarImagen);
 
 
 

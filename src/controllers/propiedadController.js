@@ -21,7 +21,6 @@ const crear = async (req, res) => {
 
   res.render('propiedades/crear', {
     page: 'Crear Propiedad',
-    barra: true,
     csrfToken: req.csrfToken(),
     categorias,
     precios,
@@ -47,7 +46,6 @@ const guardarPropiedad = async(req, res) => {
     // hay errores de validacion
     return res.render('propiedades/crear', {
       page: "Crear Propiedad",
-      barra: true,
       errores: resultado.array(),
       csrfToken: req.csrfToken(),
       categorias,
@@ -96,9 +94,16 @@ const guardarPropiedad = async(req, res) => {
   } catch (error) {
     console.log(error)
   }
+}
 
-  
 
+//! Formulario para agregar la imagen
+const agregarImagen = async(req, res) => {
+
+  res.render('propiedades/agregar-imagen', {
+    page: 'Agregar Imágen',
+    csrfToken: req.csrfToken(),   
+  })
 
 }
 
@@ -106,4 +111,5 @@ export {
   admin,
   crear,
   guardarPropiedad,
+  agregarImagen,
 }
