@@ -1,8 +1,11 @@
 (function() {
     // const lat = 20.67444163271174;       guadalajara
     // const lng = -103.38739216304566;
-    const lat = 24.0239822;
-    const lng = -104.6721137;
+    
+    // se verifica si existe una hubicación previa si no toma la ubicación por defecto
+    // se puede usar usando el logical or
+    const lat = document.querySelector('#lat').value || 24.0239822;
+    const lng = document.querySelector('#lng').value ? document.querySelector('#lng').value :-104.6721137;
     const mapa = L.map('mapa').setView([lat, lng ], 16);
     let market;
 
