@@ -11,13 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get('/mis-propiedades', 
-  protegerRuta,
-  admin,
-);
+router.get('/mis-propiedades', protegerRuta, admin);
 
-router.get('/propiedades/crear', crear);              // formulario para crear propiedad
-router.post('/propiedades/crear', 
+router.get('/propiedades/crear', protegerRuta, crear);              // formulario para crear propiedad
+router.post('/propiedades/crear', protegerRuta,
   body('titulo').notEmpty().withMessage('El titulo del anuncio es requerido'),
   body('descripcion')
     .notEmpty().withMessage('La descripción es requerida')

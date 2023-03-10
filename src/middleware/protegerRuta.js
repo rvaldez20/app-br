@@ -15,11 +15,20 @@ const protegerRuta = async (req, res, next) => {
     const payload = jwt.verify(_token, process.env.JWT_SECRET);
 
     // verificamos el usuario
-    const usuario = await Usuario.findByPk(payload.id);
-    console.log(usuario);
+    const usuario = await Usuario.scope('eliminarPassword').findByPk(payload.id);
+    
+    // verificamos si existe el usuario
+    if(usuario) {
+      // si existe lo agregamos al req
+      req.usuario = usuario;
 
-    // si el token es correcto lo dejamos pasar a /mis-propiedades
-    // next();
+    } else {
+      // si el usuario no existe
+      res.redirect('/auth/login')
+    }
+
+    // lo dejamos pasar al siguiente middleware
+    return next();
     
   } catch (error) {
     // si es un jwt alterado lo eliminamos y los redireccionamos al login
