@@ -38,14 +38,15 @@ block contenido
                      label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="categoria") Categoría
                      select(id="categoria" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="categoria")
                         option(value="") - Seleccione -
-                        each categoria in categorias
-                           option(value=categoria.id)= categoria.nombre
+                        each categoria in categorias                           
+                           option(value=categoria.id selected= datos.categoria ? datos.categoria == categoria.id ? true : false : null)= categoria.nombre
+                        
                   div(class="md:w-1/2")
                      label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="precio") Precio
                      select(id="categoria" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio")
                         option(value="") - Seleccione -
                         each precio in precios
-                           option(value=precio.id)= precio.nombre
+                           option(value=precio.id selected= datos.precio ? datos.precio == precio.id ? true : false : null)= precio.nombre
 
                //- ========= HABITACIONES | ESTACIONAMIENTO | WC
                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
@@ -55,7 +56,7 @@ block contenido
                         option(value="") - Seleccione -
                         - let h = 1;
                            while h < 9
-                              option(value=h) #{h++}
+                              option(value=h selected= datos.habitaciones ? datos.habitaciones == h ? true : false : null) #{h++}
 
                   div(class="md:w-1/3")
                      label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="estacionamiento") Estacionamieno
@@ -63,15 +64,15 @@ block contenido
                         option(value="") - Seleccione -
                         - let e = 1;
                            while e < 6
-                              option(value=e) #{e++}       
+                              option(value=e selected= datos.estacionamiento ? datos.estacionamiento == e ? true : false : null) #{e++}       
 
                   div(class="md:w-1/3")
                      label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="wc") WC
                      select(id="wc" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="wc")
                         option(value="") - Seleccione -
-                        - let wc = 1;
-                           while wc < 6
-                              option(value=wc) #{wc++}
+                        - let b = 1;
+                           while b < 6
+                              option(value=b selected= datos.wc ? datos.wc == b ? true : false : null) #{b++}
                
                //- ========= MAPA
                div(class="border-gray-200 border-t py-5 space-y-5")
