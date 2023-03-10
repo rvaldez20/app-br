@@ -2,9 +2,8 @@
 import categorias from './categorias.js'
 import precios from './precios.js'
 
-// Modelos
-import Categoria from '../src/models/Categoria.js';
-import Precio from '../src/models/Precio.js';
+// Importamos los modelos Modelos
+import { Categoria, Precio } from '../src/models/index.js'
 
 import db from '../src/config/db.js';
 
@@ -36,14 +35,14 @@ const importarDatos = async () => {
 const eliminarDatos = async () => {
   try {
     // ! Promise.all ejecuta al mismo tiempo la eliminación de la data de categorias y precios
-    await Promise.all([
-      Categoria.destroy({ where: {}, truncate: true }), 
-      Precio.destroy({ where: {}, truncate: true })
-    ]);
+    // await Promise.all([
+    //   Categoria.destroy({ where: {}, truncate: true }), 
+    //   Precio.destroy({ where: {}, truncate: true })
+    // ]);
 
 
     // otra forma
-    // await db.sync({ force: true });
+    await db.sync({ force: true });
 
     console.log('Datos Eliminados Correctamente')
     process.exit();
