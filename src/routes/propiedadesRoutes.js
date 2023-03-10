@@ -1,6 +1,8 @@
 import express from 'express';
 import { body } from 'express-validator';
 
+import protegerRuta from '../middleware/protegerRuta.js';
+
 import { 
   admin,
   crear,
@@ -9,7 +11,10 @@ import {
 
 const router = express.Router();
 
-router.get('/mis-propiedades', admin);
+router.get('/mis-propiedades', 
+  protegerRuta,
+  admin,
+);
 
 router.get('/propiedades/crear', crear);              // formulario para crear propiedad
 router.post('/propiedades/crear', 

@@ -71,7 +71,9 @@ const autenticar = async(req, res) => {
   
   return res.cookie('_token', tokenJWT, {
     httpOnly: true,
-    // secure: true,
+    // expires: 90000,
+    // secure: true,    // requiere https
+    // sameSite: true   // requiere https
   }).redirect('/mis-propiedades')
   
 }
