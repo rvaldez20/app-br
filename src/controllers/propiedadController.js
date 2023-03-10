@@ -1,8 +1,6 @@
 import { validationResult } from 'express-validator';
 
-import Categoria from '../models/Categoria.js';
-import Precio from '../models/Precio.js';
-
+import { Categoria, Precio, Propiedad } from '../models/index.js';
 
 
 //! Panel Admin (Home)
@@ -57,6 +55,45 @@ const guardarPropiedad = async(req, res) => {
       datos: req.body
     })
   }
+
+  // destructuramos todo del body
+  const {
+    titulo,
+    descripcion,
+    habitaciones,
+    estacionamiento,
+    wc,
+    calle,
+    lat,
+    lng,
+    precio: precioId,           // renombramos precio a precioId
+    categoria: categoriaId,     // renombramos categoria a categoriaId
+  } = req.body;
+
+  try {
+    // preparamos la data y la guardamos
+    const PropiedadNueva = Propiedad.create({
+      titulo,
+      descripcion,
+      habitaciones,
+      estacionamiento,
+      wc,
+      calle,
+      lat,
+      lng,
+      precioId,
+      categoriaId,
+    })
+
+    // console.log(req.body)
+
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+  
+
 
 }
 
