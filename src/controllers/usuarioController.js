@@ -67,8 +67,7 @@ const autenticar = async(req, res) => {
   // Generar el JWT
   const tokenJWT = generarJWT(usuario.id);
 
-  // almacenar el JWT en una cookie
-  
+  // almacenar el JWT en una cookie  
   return res.cookie('_token', tokenJWT, {
     httpOnly: true,
     // expires: 90000,
