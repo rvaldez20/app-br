@@ -1,11 +1,13 @@
 // seeders
 import categorias from './categorias.js'
 import precios from './precios.js'
-
-// Importamos los modelos Modelos
-import { Categoria, Precio } from '../src/models/index.js'
+import usuarios from './usuarios.js'
 
 import db from '../src/config/db.js';
+
+// Importamos los modelos Modelos
+import { Categoria, Precio, Usuario } from '../src/models/index.js'
+
 
 const importarDatos = async () => {
   try {
@@ -18,7 +20,8 @@ const importarDatos = async () => {
     // ! Promise.all ejecuta al mismo tiempo las importacion de categorias y precios
     await Promise.all([
       Categoria.bulkCreate(categorias), 
-      Precio.bulkCreate(precios)
+      Precio.bulkCreate(precios),
+      Usuario.bulkCreate(usuarios),
     ]);
 
     console.log('Datos Importados Correctamente')
