@@ -21,3 +21,8 @@ const importarDatos = async () => {
     process.exit(1);  // finaliza el proceso
   }
 }
+
+// si se le pasa el argumento -i en el script ejectua la fucncion para importar los datos
+if(process.argv[2] === '-i'){
+  importarDatos();
+}
