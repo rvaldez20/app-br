@@ -1,21 +1,33 @@
+// seeders
 import categorias from './categorias.js'
+import precios from './precios.js'
+
+// Modelos
 import Categoria from '../src/models/Categoria.js';
+import Precio from '../src/models/Precio.js';
+
 import db from '../src/config/db.js';
 
 const importarDatos = async () => {
   try {
-    // Autenticar
+    // !Autenticar
     await db.authenticate();
+    // const auth = db.authenticate();
 
-    // Generar las columnas
+    // !Generar las columnas
     await db.sync();
+    // const conexionDB = db.sync();
 
-    // Insertar los datos
-    await Categoria.bulkCreate(categorias);
+    // !Insertar los datos
+    const importCategorias = Categoria.bulkCreate(categorias);
+    const importPrecios = Precio.bulkCreate(precios);
+
+    // ! Promise.all
+    await Promise.all([importCategorias, importPrecios]);
+
     console.log('Datos Importados Correctamente')
     process.exit();
 
-    
   } catch (error) {
     console.log(error)
     process.exit(1);  // finaliza el proceso
