@@ -99,6 +99,21 @@ const guardarPropiedad = async(req, res) => {
 
 //! Formulario para agregar la imagen
 const agregarImagen = async(req, res) => {
+  const { id } = req.params;
+
+  // validar que el iD de la propiedad sea valido
+  const propiedad = await Propiedad.findByPk(id);
+  
+  if(!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+
+
+  // validar que la propiedad ya este publicada
+
+
+  // validar que la propiedad pertenezca a quien visita la pagina
 
   res.render('propiedades/agregar-imagen', {
     page: 'Agregar Imágen',
