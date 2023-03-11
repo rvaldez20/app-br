@@ -1,0 +1,2 @@
+import dropzone from 'dropzone';
+
