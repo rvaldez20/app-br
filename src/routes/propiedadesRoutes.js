@@ -28,7 +28,7 @@ router.post('/propiedades/crear', protegerRuta,
   body('lat').notEmpty().withMessage('Es necesario ubicar la propiedad en el mapa'),
   guardarPropiedad);  
 
-  router.get('/propiedades/agregar-imagen/:id', agregarImagen);
+  router.get('/propiedades/agregar-imagen/:id', protegerRuta, agregarImagen);
 
 
 
