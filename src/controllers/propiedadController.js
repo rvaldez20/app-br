@@ -126,8 +126,8 @@ const agregarImagen = async(req, res) => {
     csrfToken: req.csrfToken(),
     propiedad,
   })
-
 }
+
 
 export {
   admin,
