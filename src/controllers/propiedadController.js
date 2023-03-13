@@ -4,10 +4,19 @@ import { Categoria, Precio, Propiedad } from '../models/index.js';
 
 
 //! Panel Admin (Home)
-const admin = (req, res) => {
+const admin = async(req, res) => {
+
+  const { id } = req.usuario;
+
+  const propiedades = await Propiedad.findAll({where: {
+    usuarioId: id,
+  }})
+
+  console.log(propiedades)
+
   res.render('propiedades/admin', {
     page: 'Mis Propiedades',
-    barra: true
+    propiedades
   })
 }
 
