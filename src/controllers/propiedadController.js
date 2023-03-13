@@ -128,7 +128,9 @@ const agregarImagen = async(req, res) => {
   })
 }
 
-const almacenarImagen = async(req, res) => {
+
+//! Procesa el publicar la propiedad y guardar el nambre de la imagen y redirec a mis propiedades
+const almacenarImagen = async(req, res, next) => {
   const { id } = req.params;
 
   // validar que el iD de la propiedad sea valido
@@ -151,7 +153,7 @@ const almacenarImagen = async(req, res) => {
   }
 
   try {
-    console.log(req.file)
+    // console.log(req.file)
     /*
       Al subir la imagen multer registra información en req.file
       {
@@ -170,11 +172,18 @@ const almacenarImagen = async(req, res) => {
     propiedad.imagen = req.file.filename;
     propiedad.publicado = 1;
     await propiedad.save();
+
+    // una vez publiacada y almacenada la imagen redireccionamos a /mis-propiedades
+    // pero como el proceso lo finaliza dropzone en el navegador re.redirect no va funcionar
+    // por lo que en la configuración de dropzone usamos el evento .on 
+    // verificamos que no haya archivos en cola y redireciconamos desde el DOM:
+    // window.location.href = '/mis-propiedades'
     
+    next();
+
   } catch (error) {
     console.log(error)
   }
-
 }
 
 
