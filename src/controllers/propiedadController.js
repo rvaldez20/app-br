@@ -128,10 +128,60 @@ const agregarImagen = async(req, res) => {
   })
 }
 
+const almacenarImagen = async(req, res) => {
+  const { id } = req.params;
+
+  // validar que el iD de la propiedad sea valido
+  const propiedad = await Propiedad.findByPk(id);
+  
+  if(!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+
+  // validar que la propiedad no este publicada
+  if(propiedad.publicado) {
+    return res.redirect('/mis-propiedades')
+  }
+
+
+  // validar que la propiedad pertenezca a quien visita la pagina
+  if(req.usuario.id.toString() !== propiedad.usuarioId.toString()) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  try {
+    console.log(req.file)
+    /*
+      Al subir la imagen multer registra información en req.file
+      {
+        fieldname: 'imagen',
+        originalname: '7.jpg',
+        encoding: '7bit',
+        mimetype: 'image/jpeg',
+        destination: './public/uploads/',
+        filename: 'ocdppapesgo1grccs45o.jpg',
+        path: 'public\\uploads\\ocdppapesgo1grccs45o.jpg',
+        size: 1270714
+      }
+    */
+
+    // almacenar el nombre de la imagen y publicar la propiedad
+    propiedad.imagen = req.file.filename;
+    propiedad.publicado = 1;
+    await propiedad.save();
+    
+  } catch (error) {
+    console.log(error)
+  }
+
+}
+
 
 export {
   admin,
   crear,
   guardarPropiedad,
   agregarImagen,
+  almacenarImagen,
 }
