@@ -10,6 +10,7 @@ import {
   guardarPropiedad,
   agregarImagen,
   almacenarImagen,
+  editar,
 } from '../controllers/propiedadController.js';
 
 const router = express.Router();
@@ -35,6 +36,10 @@ router.post('/propiedades/crear', protegerRuta,
     protegerRuta, 
     upload.single('imagen'),
     almacenarImagen,
+  );
+  router.get('/propiedades/editar/:id', 
+    protegerRuta,
+    editar
   );
 
 

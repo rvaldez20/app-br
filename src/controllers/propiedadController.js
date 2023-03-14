@@ -191,7 +191,7 @@ const almacenarImagen = async(req, res, next) => {
     await propiedad.save();
 
     // una vez publiacada y almacenada la imagen redireccionamos a /mis-propiedades
-    // pero como el proceso lo finaliza dropzone en el navegador re.redirect no va funcionar
+    // pero como el proceso lo finaliza dropzone en el navegador res.redirect no va funcionar
     // por lo que en la configuración de dropzone usamos el evento .on 
     // verificamos que no haya archivos en cola y redireciconamos desde el DOM:
     // window.location.href = '/mis-propiedades'
@@ -204,10 +204,29 @@ const almacenarImagen = async(req, res, next) => {
 }
 
 
+//! Formulario para editar propiedad
+const editar = async (req, res) => {
+  // Consultar Modelos de Precios y Categorias
+  const [categorias, precios] = await Promise.all([
+      Categoria.findAll(),
+      Precio.findAll(),
+  ]);
+
+  res.render('propiedades/editar', {
+    page: 'Editar Propiedad',
+    csrfToken: req.csrfToken(),
+    categorias,
+    precios,
+    datos: {}
+  })
+}
+
+
 export {
   admin,
   crear,
   guardarPropiedad,
   agregarImagen,
   almacenarImagen,
+  editar,
 }
