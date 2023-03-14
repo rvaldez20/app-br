@@ -8,11 +8,19 @@ const admin = async(req, res) => {
 
   const { id } = req.usuario;
 
-  const propiedades = await Propiedad.findAll({where: {
-    usuarioId: id,
-  }})
+  const propiedades = await Propiedad.findAll(
+    { 
+      where: {
+        usuarioId: id,
+      },
+      include: [
+        { model: Categoria },
+        { model: Precio }
+      ],
+    }
+  )
 
-  console.log(propiedades)
+  // console.log(propiedades)
 
   res.render('propiedades/admin', {
     page: 'Mis Propiedades',
