@@ -234,8 +234,8 @@ const editar = async (req, res) => {
     page: 'Editar Propiedad',
     csrfToken: req.csrfToken(),
     categorias,
-    precios,
-    datos: {}
+    precios,    
+    datos: propiedad
   })
 }
 

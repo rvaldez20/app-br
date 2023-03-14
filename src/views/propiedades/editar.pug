@@ -9,6 +9,9 @@ block contenido
          span.font-normal.text-indigo-700 Raices
       h2(class="text-center text-3xl font-extrabold")= page
 
+      // sniped para mostrar información en la vista
+      //- pre= JSON.stringify(datos, undefined, 2)
+
       if errores
          div(class="max-w-md mx-auto my-10")
             each error in errores
@@ -30,7 +33,7 @@ block contenido
                //- ========= DESCRIPCION
                div
                   label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="descripcion") Descripción de la Propiedad
-                  textarea(id="titulo" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la Propiedad" name="descripcion" cols="30", rows="3" value= datos ? datos.descripcion : '')= datos ? datos.descripcion : ''
+                  textarea(id="titulo" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" placeholder="Descripción de la Propiedad" name="descripcion" cols="30", rows="3")= datos ? datos.descripcion : ''
 
                //- ========= CATEGORIA | PRECIO
                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")               
@@ -39,14 +42,14 @@ block contenido
                      select(id="categoria" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="categoria")
                         option(value="") - Seleccione -
                         each categoria in categorias                           
-                           option(value=categoria.id selected= datos.categoria ? datos.categoria == categoria.id ? true : false : null)= categoria.nombre
+                           option(value=categoria.id selected= datos.categoriaId ? datos.categoriaId == categoria.id ? true : false : null)= categoria.nombre
                         
                   div(class="md:w-1/2")
                      label(class="block text-sm uppercase text-gray-600 mb-2 font-bold" for="precio") Precio
                      select(id="categoria" class="w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400" name="precio")
                         option(value="") - Seleccione -
                         each precio in precios
-                           option(value=precio.id selected= datos.precio ? datos.precio == precio.id ? true : false : null)= precio.nombre
+                           option(value=precio.id selected= datos.precioId ? datos.precioId == precio.id ? true : false : null)= precio.nombre
 
                //- ========= HABITACIONES | ESTACIONAMIENTO | WC
                div(class="md:flex md:gap-4 space-y-5 md:space-y-0")
@@ -87,7 +90,7 @@ block contenido
                   input(type="hidden" name="lat" id="lat" value= datos.lat ? datos.lat : '')
                   input(type="hidden" name="lng" id="lng" value= datos.lng ? datos.lng : '')
 
-               input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-800 text-white text-center rounded uppercase font-bold cursor-pointer" type="submit" value="Añadir Imagen") 
+               input(class="w-full py-3 bg-indigo-600 hover:bg-indigo-800 text-white text-center rounded uppercase font-bold cursor-pointer" type="submit" value="Guardar Cambios") 
 
 block scripts
    script(src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js")
