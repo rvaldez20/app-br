@@ -209,7 +209,6 @@ const editar = async (req, res) => {
   // obteneos el id
   const { id } = req.params;
 
-
   //validar que la propiedad este registrada en la base de datos
   const propiedad = await Propiedad.findByPk(id);
 
@@ -231,12 +230,54 @@ const editar = async (req, res) => {
   ]);
 
   res.render('propiedades/editar', {
-    page: 'Editar Propiedad',
+    page: `Editar Propiedad: ${propiedad.titulo}`,    
     csrfToken: req.csrfToken(),
     categorias,
     precios,    
     datos: propiedad
   })
+}
+
+
+//! Guardar la actualización de una propiedad
+const guardarCambios = async(req, res) => {
+  // Consultar Modelos de Precios y Categorias
+  const [categorias, precios] = await Promise.all([
+      Categoria.findAll(),
+      Precio.findAll(),
+  ]);
+
+  // verificar la validación - verificar si hay errores
+  let resultado = validationResult(req);
+  
+  // Si resultado esta no esta vacio mostramos los errores
+  if(!resultado.isEmpty()) {
+    // hay errores de validacion
+    return res.render('propiedades/editar', {
+      page: 'Editar Propiedad',
+      csrfToken: req.csrfToken(),
+      categorias,
+      precios,    
+      errores: resultado.array(),
+      datos: req.body
+    })
+  }
+
+  // obteneos el id
+  const { id } = req.params;
+
+  //validar que la propiedad este registrada en la base de datos
+  const propiedad = await Propiedad.findByPk(id);
+
+  // si no existe propiedad lo regresamos a /mis-propiedades
+  if(!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // validar que la propiedad pertenezca al usuario que la creo
+  if(propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+    return res.redirect('/mis-propiedades')
+  }
 }
 
 
@@ -247,4 +288,5 @@ export {
   agregarImagen,
   almacenarImagen,
   editar,
+  guardarCambios
 }
