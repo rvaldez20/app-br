@@ -206,6 +206,24 @@ const almacenarImagen = async(req, res, next) => {
 
 //! Formulario para editar propiedad
 const editar = async (req, res) => {
+  // obteneos el id
+  const { id } = req.params;
+
+
+  //validar que la propiedad este registrada en la base de datos
+  const propiedad = await Propiedad.findByPk(id);
+
+  // si no existe propiedad lo regresamos a /mis-propiedades
+  if(!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // validar que la propiedad pertenezca al usuario que la creo
+  if(propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+    return res.redirect('/mis-propiedades')
+  }
+
+
   // Consultar Modelos de Precios y Categorias
   const [categorias, precios] = await Promise.all([
       Categoria.findAll(),
