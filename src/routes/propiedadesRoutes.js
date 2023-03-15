@@ -12,6 +12,7 @@ import {
   almacenarImagen,
   editar,
   guardarCambios,
+  eliminar,
 } from '../controllers/propiedadController.js';
 
 const router = express.Router();
@@ -39,6 +40,7 @@ router.post('/propiedades/crear',
     upload.single('imagen'),
     almacenarImagen,
   );
+
   router.get('/propiedades/editar/:id', 
     protegerRuta,
     editar
@@ -55,7 +57,12 @@ router.post('/propiedades/crear',
   body('estacionamiento').isNumeric().withMessage('Es necesario seleccionar la cantidad de estacionamientos'),
   body('wc').isNumeric().withMessage('Es necesario seleccionar la cantidad de baños'),
   body('lat').notEmpty().withMessage('Es necesario ubicar la propiedad en el mapa'),
-  guardarCambios);  
+  guardarCambios);
+
+  router.post('/propiedades/eliminar/:id',
+    protegerRuta,
+    eliminar
+  )
 
 
 
