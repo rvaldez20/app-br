@@ -278,6 +278,48 @@ const guardarCambios = async(req, res) => {
   if(propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
     return res.redirect('/mis-propiedades')
   }
+
+  try {
+    
+    // destructuramos todo del body
+    const {
+      titulo,
+      descripcion,
+      habitaciones,
+      estacionamiento,
+      wc,
+      calle,
+      lat,
+      lng,
+      precio: precioId,           // renombramos precio a precioId
+      categoria: categoriaId,     // renombramos categoria a categoriaId
+    } = req.body;
+
+
+  // .set setea los valores en el objeto proiedad
+  propiedad.set({
+    titulo,
+    descripcion,
+    habitaciones,
+    estacionamiento,
+    wc,
+    calle,
+    lat,
+    lng,
+    precioId,
+    categoriaId,
+  })
+
+  // guardamos los cambios de la propiedad
+  await propiedad.save();
+
+  // y redireccionamos a mis-propiedades
+  res.redirect('/mis-propiedades');
+
+    
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 
