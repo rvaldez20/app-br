@@ -1,3 +1,4 @@
+import { unlink } from 'node:fs/promises';
 import { validationResult } from 'express-validator';
 
 import { Categoria, Precio, Propiedad } from '../models/index.js';
@@ -324,8 +325,33 @@ const guardarCambios = async(req, res) => {
 }
 
 
-const eliminar = (req, res) => {
-  console.log('Eliminando........')
+const eliminar = async(req, res) => {
+  // obteneos el id
+  const { id } = req.params;
+
+  //validar que la propiedad este registrada en la base de datos
+  const propiedad = await Propiedad.findByPk(id);
+
+  // si no existe propiedad lo regresamos a /mis-propiedades
+  if(!propiedad) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // validar que la propiedad pertenezca al usuario que la creo
+  if(propiedad.usuarioId.toString() !== req.usuario.id.toString()) {
+    return res.redirect('/mis-propiedades')
+  }
+
+  // eliminamos la propiedad
+  await propiedad.destroy();
+
+  // eliminar la imagen asociada a la propiedad usamos unlike de node:fs/promises 
+  await unlink(`public/uploads/${propiedad.imagen}`)
+  console.log(`Imagen Eliminada ${propiedad.imagen}`)
+
+
+  // redireccionamos a /mis-propiedades
+  res.redirect('/mis-propiedades')
 }
 
 
