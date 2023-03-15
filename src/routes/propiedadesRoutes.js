@@ -13,6 +13,7 @@ import {
   editar,
   guardarCambios,
   eliminar,
+  mostrarPropiedad,
 } from '../controllers/propiedadController.js';
 
 const router = express.Router();
@@ -64,7 +65,8 @@ router.post('/propiedades/crear',
     eliminar
   )
 
-
+  //! ============== RUTAS PUBLICAS
+  router.get('/propiedad/:id', mostrarPropiedad);
 
 
 export default router;

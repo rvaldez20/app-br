@@ -325,6 +325,7 @@ const guardarCambios = async(req, res) => {
 }
 
 
+//! Elimina una propiedad
 const eliminar = async(req, res) => {
   // obteneos el id
   const { id } = req.params;
@@ -355,6 +356,18 @@ const eliminar = async(req, res) => {
 }
 
 
+
+//TODO ========================= (AREA PUBLICA) =========================
+
+//! Muestra Detalle propiedad
+const mostrarPropiedad = async (req, res) => {
+
+  res.render('propiedades/mostrar', {
+    page: 'Propiedad',
+    csrfToken: req.csrfToken(),
+  })
+}
+
 export {
   admin,
   crear,
@@ -364,4 +377,5 @@ export {
   editar,
   guardarCambios,
   eliminar,
+  mostrarPropiedad,
 }
