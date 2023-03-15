@@ -361,10 +361,26 @@ const eliminar = async(req, res) => {
 
 //! Muestra Detalle propiedad
 const mostrarPropiedad = async (req, res) => {
+  const { id } = req.params;
+
+  // validamos que la propiedad exista
+  const propiedad = await Propiedad.findOne({ 
+      where: {
+        id,
+      },
+      include: [
+        { model: Categoria },
+        { model: Precio }
+      ],
+    });
+  if(!propiedad) {
+    return res.redirect('/404');
+  }
 
   res.render('propiedades/mostrar', {
-    page: 'Propiedad',
+    page: Propiedad.titulo,
     csrfToken: req.csrfToken(),
+    propiedad,
   })
 }
 
