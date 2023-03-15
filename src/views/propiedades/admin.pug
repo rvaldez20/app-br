@@ -41,7 +41,8 @@ block contenido
                            
                            a(href=`/propiedades/editar/${propiedad.id}` class="w-full text-center px-2 py-2 md:py-1 text-xs leading-5 font-bold cursor-pointer rounded bg-indigo-200 text-indigo-800") Editar
 
-                           form(action="")
+                           form(method="POST" action=`/propiedades/eliminar/${propiedad.id}`)
+                              input(type="hidden" name="_csrf" value= csrfToken)
                               input(type="submit" class="w-full px-2 py-2 md:py-1 text-xs leading-5 font-bold cursor-pointer rounded bg-red-200 text-red-800" value="Eliminar")
 
 
