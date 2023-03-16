@@ -7,8 +7,20 @@ import { Categoria, Precio, Propiedad } from '../models/index.js';
 //! Panel Admin (Home)
 const admin = async(req, res) => {
 
+  // obtenemos lod query params
+  const { pagina: paginaActual } =  req.query;
+
+  // validamos que el query param de pagina sea numero con una expresion regular
+  const expresion = /[0-9]/
+  if(!expresion.test(paginaActual)) {
+    return res.redirect('/mis-propiedades?pagina=1')
+  }
+ 
+
+  // obtenemos el usuario
   const { id } = req.usuario;
 
+  // obtenemos de la DB las propiedades (con relaciones)
   const propiedades = await Propiedad.findAll(
     { 
       where: {
