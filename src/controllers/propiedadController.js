@@ -10,8 +10,10 @@ const admin = async(req, res) => {
   // obtenemos lod query params
   const { pagina: paginaActual } =  req.query;
 
+  // creamos la expresion regular
+  const expresion = /^[0-9]$/
+
   // validamos que el query param de pagina sea numero con una expresion regular
-  const expresion = /[0-9]/
   if(!expresion.test(paginaActual)) {
     return res.redirect('/mis-propiedades?pagina=1')
   }
