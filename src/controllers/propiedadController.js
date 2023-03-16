@@ -23,31 +23,46 @@ const admin = async(req, res) => {
     const { id } = req.usuario;
 
     // limites y offsets
-    const limit = 5;
+    const limit = 10;
     const offset = ((paginaActual * limit) - limit)
+
+    
 
   
     // obtenemos de la DB las propiedades (con relaciones)
-    const propiedades = await Propiedad.findAll(
-      {
-        limit,
-        offset,
-        where: {
-          usuarioId: id,
-        },
-        include: [
-          { model: Categoria },
-          { model: Precio }
-        ],
-      }
-    )
+    const [propiedades, total] = await Promise.all([
+      Propiedad.findAll(
+        {
+          limit,
+          offset,          
+          where: {
+            usuarioId: id,
+          },
+          include: [
+            { model: Categoria },
+            { model: Precio }
+          ],
+        }
+      ),
+      Propiedad.count(
+        {
+          where: {
+            usuarioId: id,
+          },
+        }
+      )
+      ])
   
-    // console.log(propiedades)
+    // console.log(total)
   
     res.render('propiedades/admin', {
       page: 'Mis Propiedades',
       csrfToken: req.csrfToken(),
-      propiedades
+      propiedades,
+      paginas: Math.ceil(total / limit),
+      limit,
+      offset,
+      total,
     })
     
   } catch (error) {
